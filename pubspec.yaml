@@ -1,0 +1,67 @@
+name: museum_vision_app
+description: App de reconocimiento de imágenes para museo
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # --- Reconocimiento visual ---
+  tflite_flutter: ^0.11.0
+  image_picker: ^1.0.4
+  image: ^4.1.7
+  permission_handler: ^11.1.0
+  path_provider: ^2.0.15
+  cupertino_icons: ^1.0.2
+
+  # --- Text-to-Speech ---
+  flutter_tts: ^4.0.2
+
+  # --- Estado centralizado ---
+  get: ^4.6.6
+
+  # --- Firebase ---
+  firebase_core: ^3.3.0
+  firebase_auth: ^5.1.0
+  cloud_firestore: ^5.2.0
+
+  # --- Persistencia local ---
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  flutter_secure_storage: ^9.0.0
+
+  # --- Comunicación con backend de IA ---
+  http: ^1.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.9
+  hive_generator: ^2.0.1
+
+flutter:
+  uses-material-design: true
+  assets:
+    # Modelos ML para todas las salas
+    - assets/models/sala1_model.tflite
+    - assets/models/sala1_labels.txt
+    - assets/models/sala2_model.tflite    #Sala 2
+    - assets/models/sala2_labels.txt      #Sala 2
+    - assets/models/sala3_model.tflite    #Sala 3
+    - assets/models/sala3_labels.txt      #Sala 3
+    - assets/models/sala4_model.tflite    #Sala 4
+    - assets/models/sala4_labels.txt      #Sala 4
+    - assets/models/sala5_model.tflite    #Sala 5
+    - assets/models/sala5_labels.txt      #Sala 5
+    - assets/models/sala6_model.tflite    #Sala 6
+    - assets/models/sala6_labels.txt      #Sala 6
+
+    - assets/models/
+    - assets/images/
+    - assets/images/logoRumiArtIA.png
+    - assets/images/RU.png
+    - assets/images/logoRumiArtIA_transp.png

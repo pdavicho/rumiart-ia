@@ -1,0 +1,21 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Obras de arte (solo lectura para usuarios autenticados) ─────────────
+    match /artworks/{docId} {
+      allow read: if request.auth != null;
+      allow write: if false; // Solo desde la consola o scripts admin
+    }
+
+    // ── Logs de reconocimiento (lectura/escritura para usuarios autenticados)
+    match /recognition_logs/{docId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasAll(['userId', 'artworkId', 'timestamp'])
+        && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if false;
+    }
+  }
+}

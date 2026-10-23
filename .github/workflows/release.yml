@@ -1,0 +1,59 @@
+name: Release — Build APK
+
+on:
+  push:
+    tags:
+      - 'v*'   # Se activa con cualquier tag tipo v1.0.0
+
+jobs:
+  build:
+    name: Build APK de Producción
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar Java (requerido para Android)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Configurar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.0'
+          channel: 'stable'
+
+      # Restaurar google-services.json desde secreto de GitHub
+      - name: Restaurar google-services.json
+        env:
+          GOOGLE_SERVICES_JSON: ${{ secrets.GOOGLE_SERVICES_JSON }}
+        run: |
+          echo "$GOOGLE_SERVICES_JSON" | base64 --decode > android/app/google-services.json
+
+      - name: Instalar dependencias
+        run: flutter pub get
+
+      - name: Build APK (release)
+        run: |
+          flutter build apk --release \
+            --dart-define=AI_BACKEND_URL=${{ secrets.AI_BACKEND_URL }}
+
+      - name: Publicar APK como Release Asset
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build/app/outputs/flutter-apk/app-release.apk
+          name: "RumiArt IA ${{ github.ref_name }}"
+          body: |
+            ## 🎨 RumiArt IA — ${{ github.ref_name }}
+
+            App de reconocimiento de obras de arte para el Museo y Centro Cultural Rumiñahui.
+
+            ### Instalación
+            1. Descarga el archivo `app-release.apk`
+            2. En tu Android, activa "Instalar apps de fuentes desconocidas"
+            3. Instala el APK
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
