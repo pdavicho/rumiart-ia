@@ -8,7 +8,7 @@ class AppConstants {
   // En desarrollo apunta al servidor local; en release al servidor de Render.
   static const aiBackendUrl = String.fromEnvironment(
     'AI_BACKEND_URL',
-    defaultValue: 'https://rumiart-ia-backend.onrender.com',
+    defaultValue: 'https://rumiart-ia.onrender.com',
   );
 
   // ── ML Service ─────────────────────────────────────────────────────────────
