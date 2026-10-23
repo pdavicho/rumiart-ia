@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*'   # Se activa con cualquier tag tipo v1.0.0
 
+permissions:
+  contents: write
+
 jobs:
   build:
     name: Build APK de Producción
