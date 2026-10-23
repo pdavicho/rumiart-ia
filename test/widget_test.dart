@@ -1,30 +1,34 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:museum_vision_app/main.dart';
+import 'package:museum_vision_app/core/constants/app_constants.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('AppConstants', () {
+    test('aiBackendUrl has a valid default value', () {
+      expect(AppConstants.aiBackendUrl, isNotEmpty);
+      expect(AppConstants.aiBackendUrl, startsWith('https://'));
+    });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    test('mlConfidenceThreshold is within valid range', () {
+      expect(AppConstants.mlConfidenceThreshold, greaterThan(0));
+      expect(AppConstants.mlConfidenceThreshold, lessThan(256));
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    test('mlInputSize is positive', () {
+      expect(AppConstants.mlInputSize, greaterThan(0));
+    });
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    test('Firestore collection names are not empty', () {
+      expect(AppConstants.artworksCollection, isNotEmpty);
+      expect(AppConstants.recognitionLogsCollection, isNotEmpty);
+    });
+
+    test('Hive box names are not empty', () {
+      expect(AppConstants.historyBox, isNotEmpty);
+      expect(AppConstants.favoritesBox, isNotEmpty);
+    });
+
+    test('maxHistoryEntries is positive', () {
+      expect(AppConstants.maxHistoryEntries, greaterThan(0));
+    });
   });
 }
