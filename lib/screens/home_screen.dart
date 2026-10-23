@@ -1,10 +1,16 @@
 ﻿import 'dart:io';
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image/image.dart' as img;
+import '../models/recognition_history.dart';
 import '../services/ml_service.dart';
 import '../services/tts_service.dart';
+import '../services/local_storage_service.dart';
+import '../services/firestore_service.dart';
+import '../controllers/history_controller.dart';
+import '../controllers/ai_controller.dart';
 
 final TTSService _ttsService = TTSService();
 
